@@ -1,0 +1,25 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+const nextJest = require('next/jest');
+
+const createJestConfig = nextJest({
+  dir: './',
+});
+
+const customJestConfig = {
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+  testEnvironment: 'jest-environment-jsdom',
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1',
+  },
+  testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],
+  collectCoverageFrom: [
+    'src/**/*.{ts,tsx}',
+    '!src/**/*.d.ts',
+    '!src/**/layout.tsx',
+  ],
+  transformIgnorePatterns: [
+    '/node_modules/(?!(jose)/)',
+  ],
+};
+
+module.exports = createJestConfig(customJestConfig);
